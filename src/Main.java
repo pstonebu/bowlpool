@@ -6,7 +6,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Scanner scan = null;
+		Scanner scan;
 		
 		try
     	{
@@ -17,13 +17,10 @@ public class Main {
 				String current = scan.nextLine();
     			Global.numUsers++;
 				String[] parsed = current.split("\t");
-                if (Global.numGames == 0) {
-                    Global.numGames = (parsed.length - 1) / 2;
-                }
             }
     		Global.users = new String[Global.numUsers];
-    		Global.picks = new int[Global.numUsers][2*Global.numGames+1];
-            Global.results = new int[Global.numGames*2];
+    		Global.picks = new int[Global.numUsers][2*Global.numGames+3];
+            Global.results = new int[Global.numGames*2+2];
             Global.tally = new int[Global.numUsers][3];
             Global.payout = new double[Global.numUsers];
             Global.pANDp = new int[Global.numUsers][2];
@@ -33,9 +30,12 @@ public class Main {
     		// Process the input file, one integer at a time
     		
     		for (int i = 0; i < Global.numUsers; i++)
-    		{	Global.users[i] = scan.next();
+    		{
+				PickSet pickSet = new PickSet();
+				Global.users[i] = scan.next();
+				pickSet.setPlayerName(Global.users[i]);
     			
-    			for (int j = 0; j < Global.numGames*2; j++)
+    			for (int j = 0; j < Global.numGames*2+2; j++)
     			{
     				Global.picks[i][j] = scan.nextInt();
     			}

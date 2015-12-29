@@ -4,6 +4,15 @@ public class Pick {
     int selection;
     int weight;
 
+    public Pick(int gameNumber, int selection, int weight) {
+        this.gameNumber = gameNumber;
+        this.selection = selection;
+        this.weight = weight;
+    }
+
+    public Pick() {
+    }
+
     public int getGameNumber() {
         return gameNumber;
     }

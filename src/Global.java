@@ -1,7 +1,7 @@
 
 public class Global 
 {
-	public static int numGames = 0;
+	public static int numGames = 26;
 	public static int numUsers = 0;
 	public static int[][] picks;
 	public static String[] users;
@@ -10,5 +10,6 @@ public class Global
 	public static int[][] tally;
     public static double[] payout;
     public static int[][] pANDp;
+	public static boolean lastGame4Teams = true;
 
 }
