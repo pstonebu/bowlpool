@@ -1,5 +1,5 @@
 
-public class Global 
+public class Global
 {
 	public static int numGames = 26;
 	public static int numUsers = 0;

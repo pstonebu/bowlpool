@@ -34,6 +34,16 @@ public class PickSet {
     public PickSet() {
     }
 
+    public PickSet(PickSet pickSet) {
+        this.playerName = pickSet.playerName;
+        this.currentScore = pickSet.currentScore;
+        this.pointsLeft = pickSet.pointsLeft;
+
+        for (Pick pick : pickSet.picks) {
+            this.picks.add(new Pick(pick));
+        }
+    }
+
     public String getPlayerName() {
         return playerName;
     }
@@ -64,5 +74,34 @@ public class PickSet {
 
     public int getPotential() {
         return currentScore + pointsLeft;
+    }
+
+    public void setPoints(ResultSet resultSet) {
+        int points = 0;
+        int left = 0;
+        for (Result result : resultSet.getResults()) {
+            Pick matchingPick = getPicks().get(result.getGameNumber());
+            if (result.getCorrectSelection().equals(matchingPick.getSelection())) {
+                points += matchingPick.getWeight();
+            }
+        }
+        for (int i = Main2.gamesPlayed; i < Main2.numGames; i++) {
+            Pick matchingPick = getPicks().get(i);
+            left += matchingPick.getWeight();
+        }
+
+        this.pointsLeft = left;
+        this.currentScore = points;
+    }
+
+    public int resultsFrom(ResultSet resultSet) {
+        int points = 0;
+        for (Result result : resultSet.getResults()) {
+            Pick matchingPick = getPicks().get(result.getGameNumber());
+            if (matchingPick.getSelection().equals(result.getCorrectSelection())) {
+                points += matchingPick.getWeight();
+            }
+        }
+        return points;
     }
 }

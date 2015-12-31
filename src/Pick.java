@@ -1,16 +1,22 @@
 public class Pick {
 
     int gameNumber;
-    int selection;
+    Selection selection;
     int weight;
 
-    public Pick(int gameNumber, int selection, int weight) {
+    public Pick(int gameNumber, Selection selection, int weight) {
         this.gameNumber = gameNumber;
         this.selection = selection;
         this.weight = weight;
     }
 
     public Pick() {
+    }
+
+    public Pick(Pick pick) {
+        this.gameNumber = pick.gameNumber;
+        this.selection = pick.selection;
+        this.weight = pick.weight;
     }
 
     public int getGameNumber() {
@@ -23,11 +29,11 @@ public class Pick {
 
     // 1 should be favorite, 0 should be underdog, except under
     // abnormal circumstances
-    public int getSelection() {
+    public Selection getSelection() {
         return selection;
     }
 
-    public void setSelection(int selection) {
+    public void setSelection(Selection selection) {
         this.selection = selection;
     }
 

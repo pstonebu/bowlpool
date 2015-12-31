@@ -3,13 +3,13 @@ VaTech		0	1	Tulsa
 Ucla	    0	1	Neb
 Navy	    1	0	Pitt
 Minn	    1	0	CMU
-Cal     	0	0	AF
-Baylor	    0	0	UNC
-ColSt	    0	0	Nevada
-LSU		    0	0	TT
-Auburn 	    0	0	Mem
-Miss		0	0	NCState
-Lou		    0	0	TA&M
+Cal     	1	0	AF
+Baylor	    1	0	UNC
+ColSt	    0	1	Nevada
+LSU		    1	0	TT
+Auburn 	    1	0	Mem
+Miss		1	0	NCState
+Lou		    1	0	TA&M
 USC		    0	0	Wisc
 FSU		    0	0	Houston
 OU  		0	0	Clemson
@@ -23,5 +23,4 @@ Georgia 	0	0	PSU
 Arkansas	0	0	KSU
 TCU     	0	0	Oregon
 ArizonaSt	0	0	WVU
-Clemson     0   0   Oklahoma
-Bama        0   0   MSU
+Clemson Bama     0   0  0   0   Oklahoma MSU

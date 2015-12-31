@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BowlPool:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/BowlPool_jar</output-path>
+    <root id="archive" name="BowlPool.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="BowlPool" />
+    </root>
+  </artifact>
+</component>
