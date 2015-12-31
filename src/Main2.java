@@ -162,5 +162,7 @@ public class Main2 {
         return resultSet;
     }
 
-    public void
+    public void outputUpdate() {
+
+    }
 }
