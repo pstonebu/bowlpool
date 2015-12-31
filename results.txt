@@ -10,7 +10,7 @@ LSU		    1	0	TT
 Auburn 	    1	0	Mem
 Miss		1	0	NCState
 Lou		    1	0	TA&M
-USC		    0	0	Wisc
+USC		    0	1	Wisc
 FSU		    0	0	Houston
 OU  		0	0	Clemson
 Bama		0	0	MichiganSt

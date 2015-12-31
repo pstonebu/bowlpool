@@ -21,9 +21,10 @@ public class ResultSet {
     }
 
     public List<Result> getResults() {
-        return results.stream()
+        /*return results.stream()
                 .sorted(Comparator.comparing(Result::getGameNumber))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
+        return results;
     }
 
     public void setResults(List<Result> results) {

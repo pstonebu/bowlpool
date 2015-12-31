@@ -53,9 +53,10 @@ public class PickSet {
     }
 
     public List<Pick> getPicks() {
-        return picks.stream()
+        /*return picks.stream()
                 .sorted(Comparator.comparing(Pick::getGameNumber))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
+        return picks;
     }
 
     public void setPicks(List<Pick> picks) {

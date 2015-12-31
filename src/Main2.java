@@ -20,6 +20,8 @@ public class Main2 {
         resultSet = scanResults();
         pickList = scanPicks();
 
+        System.out.println("Init took " + (System.currentTimeMillis()-start) + " ms.");
+
         Simulation current = new Simulation();
         current.run();
         int power = gamesPlayed == numGames ? 1 : (numGames - gamesPlayed) + 1;
@@ -159,4 +161,6 @@ public class Main2 {
 
         return resultSet;
     }
+
+    public void
 }
