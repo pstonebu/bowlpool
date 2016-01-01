@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.io.*;
 import java.util.*;
 
@@ -10,6 +12,7 @@ public class Main2 {
     public static ResultSet resultSet = new ResultSet();
     public static String picksFile = "picks.txt";
     public static String resultsFile = "results.txt";
+    public static List<Selection> eliminated = new ArrayList<Selection>();
 
 	public static void main(String[] args) {
 
@@ -19,27 +22,34 @@ public class Main2 {
         resultSet = scanResults();
         pickList = scanPicks();
 
-        System.out.println("Init took " + (System.currentTimeMillis()-start) + " ms.");
+        //Set eliminated here
+        //eliminated.add(Selection.FAVORITE);
+        eliminated.add(Selection.UNDERDOG);
+        //eliminated.add(Selection.EXTRA1);
+        //eliminated.add(Selection.EXTRA2);
+
+        System.out.println("Init took " + (System.currentTimeMillis() - start) + " ms.");
 
         Simulation current = new Simulation();
         current.run();
-        int power = gamesPlayed == numGames ? 1 : (numGames - gamesPlayed) + 1;
+        int power = gamesPlayed == numGames ? 1 : (numGames - gamesPlayed - 1);
+        double iterations = Math.pow(2.0D, power) * (lastGame4Teams ? (4-eliminated.size()) : 2.0D);
         Map<PickSet,Double> currentAverage = new HashMap<PickSet,Double>();
         for (PickSet pickSet : current.getPayout().keySet()) {
-            currentAverage.put(pickSet, current.getPayout().get(pickSet)/ Math.pow(2.0D, power));
+            currentAverage.put(pickSet, current.getPayout().get(pickSet)/ iterations);
         }
 
-        power--;
+        iterations = iterations / 2.0D;
         current.simulateNextGame(Selection.FAVORITE);
         Map<PickSet,Double> favoriteAverage = new HashMap<PickSet,Double>();
         for (PickSet pickSet : current.getPayout().keySet()) {
-            favoriteAverage.put(pickSet, current.getPayout().get(pickSet)/ Math.pow(2.0D, power));
+            favoriteAverage.put(pickSet, current.getPayout().get(pickSet)/ iterations);
         }
 
         current.simulateNextGame(Selection.UNDERDOG);
         Map<PickSet,Double> underdogAverage = new HashMap<PickSet,Double>();
         for (PickSet pickSet : current.getPayout().keySet()) {
-            underdogAverage.put(pickSet, current.getPayout().get(pickSet)/ Math.pow(2.0D, power));
+            underdogAverage.put(pickSet, current.getPayout().get(pickSet)/ iterations);
         }
 
         outputUpdate(currentAverage, favoriteAverage, underdogAverage);

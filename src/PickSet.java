@@ -88,6 +88,9 @@ public class PickSet {
         }
         for (int i = Main2.gamesPlayed; i < Main2.numGames; i++) {
             Pick matchingPick = getPicks().get(i);
+            if (matchingPick.getGameNumber() == Main2.numGames-1 && Main2.lastGame4Teams && Main2.eliminated.contains(matchingPick.getSelection())) {
+                continue;
+            }
             left += matchingPick.getWeight();
         }
 
