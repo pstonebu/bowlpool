@@ -27,8 +27,6 @@ public class Pick {
         this.gameNumber = gameNumber;
     }
 
-    // 1 should be favorite, 0 should be underdog, except under
-    // abnormal circumstances
     public Selection getSelection() {
         return selection;
     }

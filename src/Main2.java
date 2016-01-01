@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
 public class Main2 {
@@ -40,8 +39,10 @@ public class Main2 {
         current.simulateNextGame(Selection.UNDERDOG);
         Map<PickSet,Double> underdogAverage = new HashMap<PickSet,Double>();
         for (PickSet pickSet : current.getPayout().keySet()) {
-            currentAverage.put(pickSet, current.getPayout().get(pickSet)/ Math.pow(2.0D, power));
+            underdogAverage.put(pickSet, current.getPayout().get(pickSet)/ Math.pow(2.0D, power));
         }
+
+        outputUpdate(currentAverage, favoriteAverage, underdogAverage);
 
         long finish = System.currentTimeMillis();
         System.out.println("Took " + (finish-start) + " ms.");
@@ -162,7 +163,26 @@ public class Main2 {
         return resultSet;
     }
 
-    public void outputUpdate() {
+    public static void outputUpdate(Map<PickSet,Double> current, Map<PickSet,Double> favorite, Map<PickSet,Double> underdog) {
+        try {
+            PrintWriter out = new PrintWriter(new FileWriter("update2.txt"));
+
+            for (PickSet pickSet : current.keySet())
+            {
+                String name = "\"" + pickSet.getPlayerName() + "\"";
+                int currentScore = pickSet.getCurrentScore();
+                int potential = pickSet.getPotential();
+                double value = current.get(pickSet);
+                double valueIfFav = favorite.get(pickSet);
+                double valueIfUnd = underdog.get(pickSet);
+                out.println(name + "," + currentScore + "," + potential + "," + value + "," + valueIfFav + "," + valueIfUnd);
+            }
+
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            System.exit(0);
+        }
 
     }
 }

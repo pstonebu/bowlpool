@@ -46,20 +46,22 @@ public class Simulation
                 for (PickSet pickSet : Main2.pickList) {
                     standings.addPickSet(pickSet, pickSet.resultsFrom(simulatedResults) + pickSet.getCurrentScore());
                 }
+
+                double[] payoutAmounts = standings.getPayoutValues();
                 //pay out first
                 for (PickSet pickSet : standings.getFirst()) {
-                    double newPayout = payout.get(pickSet) + standings.getPayoutValues()[0];
+                    double newPayout = payout.get(pickSet) + payoutAmounts[0];
                     payout.put(pickSet, newPayout);
                 }
                 //pay out second
                 for (PickSet pickSet : standings.getSecond()) {
-                    double newPayout = payout.get(pickSet) + standings.getPayoutValues()[1];
+                    double newPayout = payout.get(pickSet) + payoutAmounts[1];
                     payout.put(pickSet, newPayout);
                 }
 
                 //pay out third
                 for (PickSet pickSet : standings.getThird()) {
-                    double newPayout = payout.get(pickSet) + standings.getPayoutValues()[2];
+                    double newPayout = payout.get(pickSet) + payoutAmounts[2];
                     payout.put(pickSet, newPayout);
                 }
 
