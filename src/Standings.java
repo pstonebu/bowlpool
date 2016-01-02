@@ -42,7 +42,7 @@ public class Standings {
     public List<PickSet> getSecond() {
         if (second == null) {
             initRankings();
-            return getSecond();
+            return second == null ? new ArrayList<PickSet>() : second;
         }
         return second;
     }
@@ -50,7 +50,7 @@ public class Standings {
     public List<PickSet> getThird() {
         if (third == null) {
             initRankings();
-            return getThird();
+            return third == null ? new ArrayList<PickSet>() : third;
         }
         return third;
     }
