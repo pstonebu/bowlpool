@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<options>
+    <option>
+        <name>lastGame4Teams</name>
+        <value>true</value>
+    </option>
+    <option>
+        <name>eliminatedTeams</name>
+        <value>1,3</value>
+    </option>
+</options>

@@ -96,7 +96,7 @@ public class Simulation
         }
 	}
 
-    public Selection getSelection(int id) {
+    public static Selection getSelection(int id) {
         switch (id) {
             case 0:
                 return Selection.FAVORITE;

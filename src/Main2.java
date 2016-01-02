@@ -1,5 +1,10 @@
-import javafx.util.Pair;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.util.*;
 
@@ -12,6 +17,7 @@ public class Main2 {
     public static ResultSet resultSet = new ResultSet();
     public static String picksFile = "picks.txt";
     public static String resultsFile = "results.txt";
+    public static String configFile = "config.xml";
     public static List<Selection> eliminated = new ArrayList<Selection>();
 
 	public static void main(String[] args) {
@@ -22,9 +28,44 @@ public class Main2 {
         resultSet = scanResults();
         pickList = scanPicks();
 
+        try {
+            File fXmlFile = new File(configFile);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = null;
+            dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+
+            doc.getDocumentElement().normalize();
+
+            NodeList options = doc.getDocumentElement().getChildNodes();
+
+            for (int i = 0;i < options.getLength(); i++) {
+
+                Node nNode = options.item(i);
+
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    String optionName = eElement.getElementsByTagName("name").item(0).getTextContent();
+                    String optionValue = eElement.getElementsByTagName("value").item(0).getTextContent();
+
+                    if (optionName.equals("lastGame4Teams")) {
+                        lastGame4Teams = Boolean.valueOf(optionValue);
+                    } else if (optionName.equals("eliminatedTeams")) {
+                        for (int j = 0; j < optionValue.split(",").length; j++) {
+                            eliminated.add(Simulation.getSelection(Integer.valueOf(optionValue.split(",")[j])));
+                        }
+                    }
+                }
+
+            }
+        } catch (Exception ex) {
+            //Do nothing, fall back to defaults
+        }
+
+
         //Set eliminated here
         //eliminated.add(Selection.FAVORITE);
-        eliminated.add(Selection.UNDERDOG);
+        //eliminated.add(Selection.UNDERDOG);
         //eliminated.add(Selection.EXTRA1);
         //eliminated.add(Selection.EXTRA2);
 
