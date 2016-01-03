@@ -19,6 +19,7 @@ public class Main2 {
     public static String resultsFile = "results.txt";
     public static String configFile = "config.xml";
     public static List<Selection> eliminated = new ArrayList<Selection>();
+    public static List<Selection> eligible = new ArrayList<Selection>();
 
 	public static void main(String[] args) {
 
@@ -62,6 +63,11 @@ public class Main2 {
             //Do nothing, fall back to defaults
         }
 
+        for (int i = 0; i < 4; i++) {
+            if (!eliminated.contains(Simulation.getSelection(i))) {
+                eligible.add(Simulation.getSelection(i));
+            }
+        }
 
         //Set eliminated here
         //eliminated.add(Selection.FAVORITE);
@@ -81,13 +87,13 @@ public class Main2 {
         }
 
         iterations = iterations / 2.0D;
-        current.simulateNextGame(Selection.FAVORITE);
+        current.simulateNextGame(gamesPlayed != numGames ? Selection.FAVORITE : eligible.get(0));
         Map<PickSet,Double> favoriteAverage = new HashMap<PickSet,Double>();
         for (PickSet pickSet : current.getPayout().keySet()) {
             favoriteAverage.put(pickSet, current.getPayout().get(pickSet)/ iterations);
         }
 
-        current.simulateNextGame(Selection.UNDERDOG);
+        current.simulateNextGame(gamesPlayed != numGames ? Selection.UNDERDOG : eligible.get(1));
         Map<PickSet,Double> underdogAverage = new HashMap<PickSet,Double>();
         for (PickSet pickSet : current.getPayout().keySet()) {
             underdogAverage.put(pickSet, current.getPayout().get(pickSet)/ iterations);

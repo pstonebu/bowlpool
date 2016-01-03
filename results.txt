@@ -20,7 +20,7 @@ OSU     	1	0	ND
 Stanford	1	0	Iowa
 OleMiss		1	0	OkState
 Georgia 	1	0	PSU
-Arkansas	0	0	KSU
-TCU     	0	0	Oregon
-ArizonaSt	0	0	WVU
+Arkansas	1	0	KSU
+TCU     	1	0	Oregon
+ArizonaSt	0	1	WVU
 Clemson Oklahoma    0   0  0   0   Alabama MSU

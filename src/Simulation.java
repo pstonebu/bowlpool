@@ -31,17 +31,18 @@ public class Simulation
 	}
 
 	public void simulateFrom(int gameNumber) {
-		boolean lastGame = (gameNumber+1 == Main2.numGames && Main2.lastGame4Teams);
+		boolean lastGame = (gameNumber+1 >= Main2.numGames && Main2.lastGame4Teams);
         int iterations = lastGame ? 4 : 2;
         for (int outcome = 0; outcome < iterations; outcome++) {
             Selection selection = getSelection(outcome);
             if (lastGame && Main2.eliminated.contains(selection)) {
                 continue;
-            }
-            Result currentResult = new Result();
-            currentResult.setGameNumber(gameNumber);
-            currentResult.setCorrectSelection(selection);
-            simulatedResults.addResult(currentResult);
+            } else if (gameNumber != Main2.numGames) {
+				Result currentResult = new Result();
+				currentResult.setGameNumber(gameNumber);
+				currentResult.setCorrectSelection(selection);
+				simulatedResults.addResult(currentResult);
+			}
 
             if (gameNumber+1 < Main2.numGames) {
 				simulateFrom(gameNumber + 1);
@@ -69,6 +70,10 @@ public class Simulation
                     double newPayout = payout.get(pickSet) + payoutAmounts[2];
                     payout.put(pickSet, newPayout);
                 }
+
+				if (lastGame && simulatedResults.getResults().isEmpty()) {
+					break;
+				}
 
 			}
 		}
