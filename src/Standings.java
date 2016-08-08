@@ -79,29 +79,29 @@ public class Standings {
 
         if (numFirst == 1)
         {
-            payouts[0] = (6.0D * Main2.numUsers);
+            payouts[0] = (6.0D * Main.numUsers);
 
             if (numSecond == 1)
             {
-                payouts[1] = (3.0D * Main2.numUsers / numSecond);
-                payouts[2] = (1.0D * Main2.numUsers / numThird);
+                payouts[1] = (3.0D * Main.numUsers / numSecond);
+                payouts[2] = (1.0D * Main.numUsers / numThird);
             }
             else
             {
-                payouts[1] = (4.0D * Main2.numUsers / numSecond);
+                payouts[1] = (4.0D * Main.numUsers / numSecond);
                 payouts[2] = 0.0D;
             }
 
         }
         else if (numFirst == 2)
         {
-            payouts[0] = (9.0D * Main2.numUsers / numFirst);
-            payouts[1] = (1.0D * Main2.numUsers / numSecond);
+            payouts[0] = (9.0D * Main.numUsers / numFirst);
+            payouts[1] = (1.0D * Main.numUsers / numSecond);
             payouts[2] = 0.0D;
         }
         else
         {
-            payouts[0] = (10.0D * Main2.numUsers / numFirst);
+            payouts[0] = (10.0D * Main.numUsers / numFirst);
             payouts[1] = 0.0D;
             payouts[2] = 0.0D;
         }

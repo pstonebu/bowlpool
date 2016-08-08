@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,9 +85,9 @@ public class PickSet {
                 points += matchingPick.getWeight();
             }
         }
-        for (int i = Main2.gamesPlayed; i < Main2.numGames; i++) {
+        for (int i = Main.gamesPlayed; i < Main.numGames; i++) {
             Pick matchingPick = getPicks().get(i);
-            if (matchingPick.getGameNumber() == Main2.numGames-1 && Main2.lastGame4Teams && Main2.eliminated.contains(matchingPick.getSelection())) {
+            if (matchingPick.getGameNumber() == Main.numGames-1 && Main.lastGame4Teams && Main.eliminated.contains(matchingPick.getSelection())) {
                 continue;
             }
             left += matchingPick.getWeight();

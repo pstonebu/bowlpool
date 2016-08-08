@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,36 +19,36 @@ public class Simulation
 
     public void resetPayouts() {
         payout = new HashMap<PickSet,Double>();
-        for (PickSet pickSet : Main2.pickList) {
+        for (PickSet pickSet : Main.pickList) {
             payout.put(pickSet, 0.0);
         }
     }
 
 	public void run() {
 		simulatedResults = new ResultSet();
-		simulateFrom(Main2.gamesPlayed);
+		simulateFrom(Main.gamesPlayed);
 	}
 
 	public void simulateFrom(int gameNumber) {
-		boolean lastGame = (gameNumber+1 >= Main2.numGames && Main2.lastGame4Teams);
+		boolean lastGame = (gameNumber+1 >= Main.numGames && Main.lastGame4Teams);
         int iterations = lastGame ? 4 : 2;
         for (int outcome = 0; outcome < iterations; outcome++) {
             Selection selection = getSelection(outcome);
-            if (lastGame && Main2.eliminated.contains(selection)) {
+            if (lastGame && Main.eliminated.contains(selection)) {
                 continue;
-            } else if (gameNumber != Main2.numGames) {
+            } else if (gameNumber != Main.numGames) {
 				Result currentResult = new Result();
 				currentResult.setGameNumber(gameNumber);
 				currentResult.setCorrectSelection(selection);
 				simulatedResults.addResult(currentResult);
 			}
 
-            if (gameNumber+1 < Main2.numGames) {
+            if (gameNumber+1 < Main.numGames) {
 				simulateFrom(gameNumber + 1);
 			} else {
 				//do the stuff here
                 Standings standings = new Standings();
-                for (PickSet pickSet : Main2.pickList) {
+                for (PickSet pickSet : Main.pickList) {
                     standings.addPickSet(pickSet, pickSet.resultsFrom(simulatedResults) + pickSet.getCurrentScore());
                 }
 
@@ -81,23 +80,23 @@ public class Simulation
 
 	public void simulateNextGame(Selection selection) {
         //add known result
-        Result next = new Result(Main2.gamesPlayed, selection);
-        Main2.resultSet.addResult(next);
-        Main2.gamesPlayed++;
-        for (PickSet pickSet : Main2.pickList) {
-            pickSet.setPoints(Main2.resultSet);
+        Result next = new Result(Main.gamesPlayed, selection);
+        Main.resultSet.addResult(next);
+        Main.gamesPlayed++;
+        for (PickSet pickSet : Main.pickList) {
+            pickSet.setPoints(Main.resultSet);
         }
 
         //run it
         resetPayouts();
         simulatedResults = new ResultSet();
-        simulateFrom(Main2.gamesPlayed);
+        simulateFrom(Main.gamesPlayed);
 
         //reset it
-        Main2.resultSet.removeResult(next);
-        Main2.gamesPlayed--;
-        for (PickSet pickSet : Main2.pickList) {
-            pickSet.setPoints(Main2.resultSet);
+        Main.resultSet.removeResult(next);
+        Main.gamesPlayed--;
+        for (PickSet pickSet : Main.pickList) {
+            pickSet.setPoints(Main.resultSet);
         }
 	}
 
@@ -114,80 +113,4 @@ public class Simulation
         }
         return null;
     }
-
-	public static void output(String filename)
-	{
-		//Grab current score and potential
-		for (int i =0; i < Global.numUsers; i++)
-		{
-			int currentscore = 0;
-			int potential = 0;
-
-			for (int j = 0; j < (Global.gamesPlayed); j++)
-			{
-				currentscore = currentscore + (Global.results[2*j]*Global.picks[i][2*j]) + (Global.results[(2*j)+1]*Global.picks[i][(2*j)+1]);
-			}
-
-			for (int j = Global.gamesPlayed; j < Global.numGames+1; j++)
-			{
-				potential = potential + (Global.picks[i][(2*j)] + Global.picks[i][(2*j)+1]);
-			}
-
-			potential = currentscore + potential;
-			Global.pANDp[i][0] = currentscore;
-			Global.pANDp[i][1] = potential;
-		}
-
-
-
-		try
-		{
-			if (filename.equals("current.txt"))
-				filename = "current (before game " + (Global.gamesPlayed+1) + ").csv";
-			PrintWriter out = new PrintWriter(new FileWriter(filename));
-
-			for (int i = 0; i < Global.numUsers; i++)
-			{
-				out.print("\"" + Global.users[i] + "\"," + Global.pANDp[i][0] + "," + Global.pANDp[i][1] + ",");
-
-				//Value
-				int power = Global.gamesPlayed == 26 ? 1 : (Global.numGames - Global.gamesPlayed) + 1;
-				out.println(Global.payout[i] / Math.pow(2.0D, power));
-			}
-
-			out.flush();
-			out.close();
-		}
-		catch (IOException e)
-		{
-			System.exit(0);
-		}
-	}
-
-	public static void outputValue(String filename)
-	{
-		try
-		{
-			PrintWriter out = new PrintWriter(new FileWriter(filename));
-
-			for (int i = 0; i < Global.numUsers; i++)
-			{
-				out.print(Global.users[i] + ",");
-				int power = 0;
-
-				if (Global.gamesPlayed == 26)
-					power = 1;
-				else
-					power = Global.numGames - Global.gamesPlayed;
-				out.println(Global.payout[i] / Math.pow(2.0D, power));
-			}
-
-			out.flush();
-			out.close();
-		}
-		catch (IOException e)
-		{
-			System.exit(0);
-		}
-	}
 }
